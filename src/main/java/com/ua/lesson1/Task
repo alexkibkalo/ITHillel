@@ -1,0 +1,6 @@
+Програма, яка виводить на екран напис “Hello, <Ваше імʼя>!”. (terminal)
+
+1. javac --version
+2. javac Main.java
+3. java --version (to check JRE and JVM)
+4. java Main.java Oleksandr
