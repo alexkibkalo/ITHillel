@@ -1,4 +1,4 @@
-package com.ua.lesson2.arraylist;
+package com.ua.lesson2;
 
 import java.util.Arrays;
 
