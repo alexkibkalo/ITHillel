@@ -20,6 +20,20 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         A a = new A();
         a.start();
+        a.isAlive();
+        a.isInterrupted();
+        a.interrupt();
+        a.getName();
+        a.getPriority();
+        a.getId();
+
+        a.join();
+
+        a.notify();
+        a.notifyAll();
+
+        Thread.sleep(1000);
+
 
         B b = new B();
         b.run();
