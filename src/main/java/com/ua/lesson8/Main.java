@@ -1,42 +1,37 @@
 package com.ua.lesson8;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.ua.lesson8.dao.UserService;
+import com.ua.lesson8.dao.UserServiceImpl;
+import com.ua.lesson8.resources.SecureResource;
+import com.ua.lesson8.service.AuthorizationService;
 
 public class Main {
-    public static void main(String[] args) {
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/postgres";
-        String username = "postgres";
-        String password = "admin";
+    private final static String USERNAME = "maewrfewrfrtin";
+    private final static String PASSWORD = "rfewrferwf";
 
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
-            String login = "test";
-            String providedPassword = "test";
+    public static void main(String[] args) throws InterruptedException {
+        SecureResource resource = new SecureResource();
+        AuthorizationService authorizationService = new AuthorizationService();
+        UserService userService = new UserServiceImpl();
 
-            String sql = "SELECT password FROM users WHERE username = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, login);
+        resource.printSecuredText(USERNAME, PASSWORD);
 
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        String storedPassword = resultSet.getString("password");
+        Thread.sleep(2000);
 
-                        if (providedPassword.equals(storedPassword)) {
-                            System.out.println("Authentication successful. Welcome, " + login + "!");
-                        } else {
-                            System.out.println("Authentication failed. Invalid password.");
-                        }
-                    } else {
-                        System.out.println("Authentication failed. User not found.");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        authorizationService.login(USERNAME, PASSWORD);
+
+        Thread.sleep(2000);
+
+        resource.printSecuredText(USERNAME, PASSWORD);
+
+        System.out.println("Creating new user...");
+
+        userService.create(USERNAME, PASSWORD);
+        authorizationService.login(USERNAME, PASSWORD);
+
+        Thread.sleep(2000);
+
+        resource.printSecuredText(USERNAME, PASSWORD);
     }
 }
